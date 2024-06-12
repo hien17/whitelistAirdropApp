@@ -19,7 +19,7 @@ function ClaimButton() {
 
   const { contract } = useContract('0xE4a0dbba60A2174E4c51Ab04Aa51aE4348A3E3dc');
   const { mutateAsync } = useContractWrite(contract, "whitelistSale");
-
+  
   useEffect(() => {
     setError("");
     if (address) {
@@ -36,7 +36,7 @@ function ClaimButton() {
         setError("Address not found in whitelist, please contact the team if you consider this an error.");
       }
     }
-  }, [address]);
+  }, [address, hexProof]);
 
   return (
     <div className="space-y-8 px-20">
