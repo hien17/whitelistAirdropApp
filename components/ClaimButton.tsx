@@ -68,9 +68,12 @@ function ClaimButton() {
         })}
         className="hover:scale-105 !rounded-xl shadow-xl shadow-blue-300 !px-12 !bg-slate-900 !border-white !border"
       > 
-        <div className={`font-bold text-2xl bg-clip-text text-transparent bg-gradient-to-b from-[#bfa3da] via-[#84309c] to-[#c735b0]`}>
+        {address?<div className={`font-bold text-2xl bg-clip-text text-transparent bg-gradient-to-b from-[#bfa3da] via-[#84309c] to-[#c735b0]`}>
           Claim reward
-        </div>
+        </div>:
+        <div className={`font-bold text-2xl !text-white bg-gradient-to-b from-[#bfa3da] via-[#84309c] to-[#c735b0]`}>
+          Connect Wallet
+        </div>}
       </Web3Button>
     </div>
   );
