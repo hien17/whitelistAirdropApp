@@ -10,6 +10,7 @@ import keccak256 from "keccak256";
 import freeClaimList from "../utils/db/freeClaimList.json";
 import {generateMerkleTree, generateProof} from "../utils/generateMerkleRoot"
 import styles from "../styles/Home.module.css";
+import { CONTRACT_ADDRESS } from "../utils/constants";
 
 function ClaimButton() {
   const address = useAddress();
@@ -17,17 +18,19 @@ function ClaimButton() {
   const [amount, setAmount] = useState<number | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  const { contract } = useContract('0xE4a0dbba60A2174E4c51Ab04Aa51aE4348A3E3dc');
+  const { contract } = useContract(CONTRACT_ADDRESS);
   const { mutateAsync } = useContractWrite(contract, "whitelistSale");
   
   useEffect(() => {
     setError("");
     if (address) {
+      // Read data from json file
       const rawData: Record<string, number> = freeClaimList;
+
+      // Create merkle tree from list of available claims
       const [merkleRoot, merkleTree] = generateMerkleTree(rawData);
       const userAmount = rawData[address];
-      console.log("Merkle Root Hash is: ",merkleRoot);
-      if (hexProof) console.log("Proof is: ",hexProof);
+
       if (userAmount !== undefined) {
         const proof = generateProof(address, userAmount, merkleTree);
         setHexProof(proof);
@@ -59,7 +62,7 @@ function ClaimButton() {
         </div>
       }
       <Web3Button
-        contractAddress='0xE4a0dbba60A2174E4c51Ab04Aa51aE4348A3E3dc'
+        contractAddress={CONTRACT_ADDRESS}
         action={() => mutateAsync({
           args: [
             hexProof,
