@@ -34,12 +34,13 @@ function ClaimButton() {
       if (userAmount !== undefined) {
         const proof = generateProof(address, userAmount, merkleTree);
         setHexProof(proof);
+        console.log(merkleRoot, proof);
         setAmount(userAmount);
       } else {
         setError("Address not found in whitelist, please contact the team if you consider this an error.");
       }
     }
-  }, [address, hexProof]);
+  }, [address]);
 
   return (
     <div className="space-y-8 px-20">
